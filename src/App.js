@@ -12,12 +12,21 @@ class App extends React.Component {
       monsters: [],
       searchField: ''
     };
+
+    // bind the context of this to the handleChange method
+    // the following bind statement is not needed when using arrow functions
+   // this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     fetch('http://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => this.setState({ monsters: users}));
+  }
+
+  // note that arrow functiona automatically bind this to the function context
+  handleChange = (e) => {
+    this.setState({ searchField: e.target.value });
   }
 
 
@@ -33,6 +42,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
+        <h1>Monsters Rolodex</h1>
         <SearchBox 
             placeholder = "search monsters" 
             handleChange = {evnt => 
